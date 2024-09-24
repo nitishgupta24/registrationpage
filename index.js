@@ -1,16 +1,17 @@
-const express = require('express');
-const path = require('path');
+// requiring the all necessary modules to be loaded
+const path = require("path");
+const express = require("express");
+const connection = require("./connection");
+const student = require("./routes/student");
 const app = express();
-//connection();
-app.set('view engine', 'ejs');
-app.use('/static', express.static(path.join(__dirname,'public')));
-app.get('/', (req, res) => {
-    res.render('base',{title:"Login System"})
-})
-app.listen(3001, (err) => {
-    if (err) {
-        console.log("err");
-    } else {
-        console.log("server is running...");
-    }
-})
+connection();
+app.use(student);
+
+
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"));
+
+app.listen(3002, (err) => {
+  if (err) console.log("something error while running this server", err);
+  else console.log("Server is running on port 3002");
+});
